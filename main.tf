@@ -1,8 +1,8 @@
 resource "aws_security_group" "AlbSg" {
   description = "Allow Https traffic"
-  name = "RP-ALB-SG"
+  name = var.alb_sg_name
   tags = {
-    Name = "RP-ALB-SG"
+    Name = var.alb_sg_name
     Project = "RP"
   }
   vpc_id = var.vpc-id
@@ -36,9 +36,9 @@ resource "aws_security_group" "AlbSg" {
 
 resource "aws_security_group" "AlbEcsSg" {
   description = "Allow Https to from ALB"
-  name = "RP-ECS-ALB-SG"
+  name = var.alb_ecs_sg_name
   tags = {
-    Name = "RP-ECS-ALB-SG"
+    Name = var.alb_ecs_sg_name
     Project = "RP"
   }
   vpc_id = var.vpc-id
@@ -63,7 +63,7 @@ resource "aws_security_group" "AlbEcsSg" {
 }
 resource "aws_security_group" "PrivateEcsSg" {
   description = "Private SG for containers"
-  name = "RP-ECS-Private-SG"
+  name = var.private_ecs_sg_name
   tags = {
     Project = "RP"
     Name = "RP-ECS-Private-SG"
@@ -92,10 +92,10 @@ resource "aws_security_group" "PrivateEcsSg" {
 
 resource "aws_security_group" "RDS-Sg" {
   description = "Private SG for DB"
-  name = "RP-RDS-Dev-SG"
+  name = var.rds_sg_name
   tags = {
     Project = "RP"
-    Name = "RP-RDS-Dev-SG"
+    Name = var.rds_sg_name
   }
   vpc_id = var.vpc-id
   ingress {
