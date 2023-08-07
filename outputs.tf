@@ -1,8 +1,8 @@
 output "private-sg-ecs" {
   value = aws_security_group.PrivateEcsSg.id
 }
-output "public-sg-ecs" {
-  value = aws_security_group.PublicEcsSg.id
+output "alb-sg-ecs" {
+  value = aws_security_group.AlbEcsSg.id
 }
 
 output "alb-sg" {

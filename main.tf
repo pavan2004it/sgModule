@@ -34,7 +34,7 @@ resource "aws_security_group" "AlbSg" {
   }
 }
 
-resource "aws_security_group" "PublicEcsSg" {
+resource "aws_security_group" "AlbEcsSg" {
   description = "Allow Https to from ALB"
   name = "RP-ECS-ALB-SG"
   tags = {
@@ -71,7 +71,7 @@ resource "aws_security_group" "PrivateEcsSg" {
   vpc_id = var.vpc-id
   ingress {
     security_groups = [
-      aws_security_group.PublicEcsSg.id
+      aws_security_group.AlbEcsSg.id
     ]
     from_port = 0
     protocol = "-1"
@@ -121,7 +121,7 @@ resource "aws_security_group" "RDS-Sg" {
     to_port = 3306
   }
   ingress  {
-    security_groups  = [aws_security_group.PublicEcsSg.id]
+    security_groups  = [aws_security_group.AlbEcsSg.id]
     from_port = 3306
     protocol = "tcp"
     to_port = 3306
