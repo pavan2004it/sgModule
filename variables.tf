@@ -10,6 +10,3 @@ variable "rds_sg_name" {
 variable "private_ecs_sg_name" {
   type = string
 }
-variable "alb_ecs_sg_name" {
-  type = string
-}
