@@ -34,33 +34,6 @@ resource "aws_security_group" "AlbSg" {
   }
 }
 
-resource "aws_security_group" "AlbEcsSg" {
-  description = "Allow Https to from ALB"
-  name = var.alb_ecs_sg_name
-  tags = {
-    Name = var.alb_ecs_sg_name
-    Project = "RP"
-  }
-  vpc_id = var.vpc-id
-  ingress {
-    security_groups = [
-      aws_security_group.AlbSg.id
-    ]
-    from_port = 0
-    protocol = "-1"
-    to_port = 0
-  }
-  egress {
-    cidr_blocks = [
-      "0.0.0.0/0"
-    ]
-    description = "Allow outbound"
-    from_port = 0
-    protocol = "-1"
-    to_port = 0
-  }
-
-}
 resource "aws_security_group" "PrivateEcsSg" {
   description = "Private SG for containers"
   name = var.private_ecs_sg_name
@@ -71,7 +44,7 @@ resource "aws_security_group" "PrivateEcsSg" {
   vpc_id = var.vpc-id
   ingress {
     security_groups = [
-      aws_security_group.AlbEcsSg.id
+      aws_security_group.AlbSg.id
     ]
     from_port = 0
     protocol = "-1"
@@ -116,12 +89,6 @@ resource "aws_security_group" "RDS-Sg" {
   }
   ingress {
     security_groups = [aws_security_group.PrivateEcsSg.id]
-    from_port = 3306
-    protocol = "tcp"
-    to_port = 3306
-  }
-  ingress  {
-    security_groups  = [aws_security_group.AlbEcsSg.id]
     from_port = 3306
     protocol = "tcp"
     to_port = 3306
