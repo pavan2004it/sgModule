@@ -39,7 +39,7 @@ resource "aws_security_group" "PrivateEcsSg" {
   name = var.private_ecs_sg_name
   tags = {
     Project = "RP"
-    Name = "RP-ECS-Private-SG"
+    Name = var.private_ecs_sg_name
   }
   vpc_id = var.vpc-id
   ingress {
