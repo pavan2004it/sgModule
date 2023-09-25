@@ -10,3 +10,7 @@ variable "rds_sg_name" {
 variable "private_ecs_sg_name" {
   type = string
 }
+variable "app_subnets" {
+  type = list(string)
+  default = []
+}

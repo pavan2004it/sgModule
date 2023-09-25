@@ -71,26 +71,14 @@ resource "aws_security_group" "RDS-Sg" {
     Name = var.rds_sg_name
   }
   vpc_id = var.vpc-id
-  ingress {
-    cidr_blocks = [
-      "192.168.11.0/24"
-    ]
-    from_port = 3306
-    protocol = "tcp"
-    to_port = 3306
-  }
-  ingress {
-    cidr_blocks = [
-      "192.168.8.0/24"
-    ]
-    from_port = 3306
-    protocol = "tcp"
-    to_port = 3306
-  }
-  ingress {
-    security_groups = [aws_security_group.PrivateEcsSg.id]
-    from_port = 3306
-    protocol = "tcp"
-    to_port = 3306
+  count = length(var.app_subnets)
+  dynamic "ingress" {
+    for_each = var.app_subnets
+    content {
+      from_port = 3306
+      to_port = 3306
+      protocol = "tcp"
+      cidr_blocks = [ingress.value]
+    }
   }
 }
