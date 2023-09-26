@@ -7,5 +7,5 @@ output "alb-sg" {
 }
 
 output "rds-sg" {
-  value = aws_security_group.RDS-Sg[*].id
+  value = aws_security_group.RDS-Sg.id
 }
