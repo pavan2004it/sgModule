@@ -71,7 +71,6 @@ resource "aws_security_group" "RDS-Sg" {
     Name = var.rds_sg_name
   }
   vpc_id = var.vpc-id
-  count = length(var.app_subnets)
   dynamic "ingress" {
     for_each = var.app_subnets
     content {
